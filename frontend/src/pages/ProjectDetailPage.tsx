@@ -17,7 +17,7 @@ import {
   PlayCircleOutlined,
   PlusOutlined
 } from '@ant-design/icons'
-import { useProjectStore } from '../store/useProjectStore'
+import { useProjectStore, Collection } from '../store/useProjectStore'
 import { projectApi } from '../services/api'
 import ClipCard from '../components/ClipCard'
 
@@ -50,7 +50,7 @@ const ProjectDetailPage: React.FC = () => {
   const [showCreateCollection, setShowCreateCollection] = useState(false)
   const [sortBy, setSortBy] = useState<'time' | 'score'>('score')
   const [showCollectionDetail, setShowCollectionDetail] = useState(false)
-  const [selectedCollection, setSelectedCollection] = useState<unknown>(null)
+  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null)
   const { generateAndDownloadCollectionVideo } = useCollectionVideoDownload()
 
   useEffect(() => {
@@ -128,7 +128,7 @@ const ProjectDetailPage: React.FC = () => {
     }
   }
 
-  const handleViewCollection = (collection: unknown) => {
+  const handleViewCollection = (collection: Collection) => {
     setSelectedCollection(collection)
     setShowCollectionDetail(true)
   }
@@ -330,8 +330,7 @@ const ProjectDetailPage: React.FC = () => {
                       if (collection) {
                         await generateAndDownloadCollectionVideo(
                           currentProject.id, 
-                          collectionId, 
-                          collection.collection_title
+                          collectionId
                         )
                       }
                     }}
@@ -448,7 +447,7 @@ const ProjectDetailPage: React.FC = () => {
                   <ClipCard
                     key={clip.id}
                     clip={clip}
-                    videoUrl={projectApi.getClipVideoUrl(currentProject.id, clip.id, clip.generated_title || clip.title)}
+                    videoUrl={projectApi.getClipVideoUrl(currentProject.id, clip.id)}
                     onDownload={(clipId) => projectApi.downloadVideo(currentProject.id, clipId)}
                   />
                 ))}

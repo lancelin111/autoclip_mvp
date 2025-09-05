@@ -259,9 +259,9 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
       console.error('Failed to remove clip from collection, rolling back:', error)
       console.error('Error details:', {
         message: error instanceof Error ? error.message : 'Unknown error',
-        status: (error as unknown)?.response?.status,
-        statusText: (error as unknown)?.response?.statusText,
-        data: (error as unknown)?.response?.data
+        status: (error as any)?.response?.status,
+        statusText: (error as any)?.response?.statusText,
+        data: (error as any)?.response?.data
       })
       // 回滚到原始状态
       updateState(originalClipIds)
@@ -335,9 +335,9 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
       console.error('Backend update failed, rolling back:', error)
       console.error('Error details:', {
         message: error instanceof Error ? error.message : 'Unknown error',
-        status: (error as unknown)?.response?.status,
-        statusText: (error as unknown)?.response?.statusText,
-        data: (error as unknown)?.response?.data
+        status: (error as any)?.response?.status,
+        statusText: (error as any)?.response?.statusText,
+        data: (error as any)?.response?.data
       })
       // 回滚到原始状态
       updateState(originalClipIds)
@@ -411,9 +411,9 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
       console.error('Failed to add clips to collection, rolling back:', error)
       console.error('Error details:', {
         message: error instanceof Error ? error.message : 'Unknown error',
-        status: (error as unknown)?.response?.status,
-        statusText: (error as unknown)?.response?.statusText,
-        data: (error as unknown)?.response?.data
+        status: (error as any)?.response?.status,
+        statusText: (error as any)?.response?.statusText,
+        data: (error as any)?.response?.data
       })
       // 回滚到原始状态
       updateState(originalClipIds)

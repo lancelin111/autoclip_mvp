@@ -330,7 +330,7 @@ const CollectionPreviewModal: React.FC<CollectionPreviewModalProps> = ({
                   {currentClip ? (
                     <ReactPlayer
                       ref={playerRef}
-                      url={projectApi.getClipVideoUrl(projectId, currentClip.id, currentClip.title || currentClip.generated_title)}
+                      url={projectApi.getClipVideoUrl(projectId, currentClip.id)}
                       width="100%"
                       height="100%"
                       playing={playing}

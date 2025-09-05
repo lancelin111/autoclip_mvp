@@ -81,15 +81,31 @@ export interface ProcessingStatus {
 
 // B站相关接口类型已移除
 
+// 设置接口类型
+export interface Settings {
+  dashscope_api_key?: string
+  siliconflow_api_key?: string
+  api_provider: string
+  model_name: string
+  siliconflow_model: string
+  chunk_size: number
+  min_score_threshold: number
+  max_clips_per_collection: number
+  default_browser?: string | null
+  auto_detect_intro?: boolean
+  default_intro_duration?: number
+  manual_intro_duration?: number | null
+}
+
 // 设置相关API
 export const settingsApi = {
   // 获取系统配置
-  getSettings: (): Promise<unknown> => {
+  getSettings: (): Promise<Settings> => {
     return api.get('/settings')
   },
 
   // 更新系统配置
-  updateSettings: (settings: unknown): Promise<unknown> => {
+  updateSettings: (settings: Partial<Settings>): Promise<Settings> => {
     return api.post('/settings', settings)
   },
 
