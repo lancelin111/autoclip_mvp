@@ -253,4 +253,31 @@ class SiliconFlowClient:
                         raise ValueError(f"无法从响应中解析出有效的JSON: {response[:200]}...") from final_e
             
             # 如果连通用正则都找不到，就彻底失败
-            raise ValueError(f"无法从响应中解析出有效的JSON: {response[:200]}...") 
+            raise ValueError(f"无法从响应中解析出有效的JSON: {response[:200]}...")
+    
+    def _validate_json_structure(self, parsed_data: Any) -> bool:
+        """
+        验证JSON结构的有效性
+        """
+        try:
+            if not isinstance(parsed_data, list):
+                logger.error(f"响应不是数组格式，实际类型: {type(parsed_data)}")
+                return False
+            
+            for i, item in enumerate(parsed_data):
+                if not isinstance(item, dict):
+                    logger.error(f"第{i}个元素不是对象格式，实际类型: {type(item)}")
+                    return False
+                    
+                # 检查基本字段（可根据具体需求调整）
+                if 'outline' in item or 'start_time' in item or 'end_time' in item:
+                    required_fields = ['outline', 'start_time', 'end_time']
+                    for field in required_fields:
+                        if field not in item:
+                            logger.error(f"第{i}个元素缺少必需字段: {field}")
+                            return False
+        except Exception as e:
+            logger.error(f"验证JSON结构时出错: {e}")
+            return False
+        
+        return True 

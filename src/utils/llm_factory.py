@@ -2,7 +2,7 @@
 LLM客户端工厂 - 根据配置选择使用通义千问或硅基流动API
 """
 import logging
-from typing import Optional
+from typing import Optional, Union
 from .llm_client import LLMClient
 from .siliconflow_client import SiliconFlowClient
 from ..config import config_manager
@@ -13,7 +13,7 @@ class LLMFactory:
     """LLM客户端工厂"""
     
     @staticmethod
-    def create_client(provider: Optional[str] = None, api_key: Optional[str] = None, model: Optional[str] = None) -> LLMClient | SiliconFlowClient:
+    def create_client(provider: Optional[str] = None, api_key: Optional[str] = None, model: Optional[str] = None) -> Union[LLMClient, SiliconFlowClient]:
         """
         创建LLM客户端
         

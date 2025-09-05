@@ -48,7 +48,7 @@
 
 ```bash
 # 1. Clone the project
-git clone git@github.com:zhouxiaoka/autoclip_mvp.git
+git clone git@github.com:lancelin/autoclip_mvp.git
 cd autoclip_mvp
 
 # 2. Configure environment variables
@@ -67,7 +67,7 @@ cp env.example .env
 
 1. **Clone the project**
 ```bash
-git clone git@github.com:zhouxiaoka/autoclip_mvp.git
+git clone git@github.com:lancelin/autoclip_mvp.git
 cd autoclip_mvp
 ```
 
@@ -313,7 +313,7 @@ Support for Chrome, Firefox, Safari and other browsers for Bilibili video downlo
 ### Quick Deployment
 ```bash
 # 1. Clone the project
-git clone git@github.com:zhouxiaoka/autoclip_mvp.git
+git clone git@github.com:lancelin/autoclip_mvp.git
 cd autoclip_mvp
 
 # 2. Configure environment variables

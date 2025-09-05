@@ -54,6 +54,7 @@ export interface UploadFilesRequest {
   srt_file?: File
   project_name: string
   video_category?: string
+  auto_generate_srt?: boolean
 }
 
 export interface VideoCategory {
@@ -162,6 +163,9 @@ export const projectApi = {
     formData.append('project_name', data.project_name)
     if (data.video_category) {
       formData.append('video_category', data.video_category)
+    }
+    if (data.auto_generate_srt !== undefined) {
+      formData.append('auto_generate_srt', data.auto_generate_srt.toString())
     }
     
     return api.post('/upload', formData, {

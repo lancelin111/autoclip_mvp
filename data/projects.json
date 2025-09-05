@@ -1,161 +1,194 @@
 [
   {
-    "id": "2617d8ad-1c93-4845-8c8c-d3037862772a",
-    "name": "【AI创业】18个月从0到200万用户：如何打造顶尖AI数据分析工具 | Julius AI创始人Rahul Sonwalkar",
-    "video_path": "uploads/2617d8ad-1c93-4845-8c8c-d3037862772a/input/input.mp4",
+    "id": "63305b43-d1ef-4d38-a696-32aba0d333af",
+    "name": "清明上河图密码01",
+    "video_path": "uploads/63305b43-d1ef-4d38-a696-32aba0d333af/input/input.mp4",
     "status": "completed",
-    "created_at": "2025-07-10T23:45:49.649376",
-    "updated_at": "2025-07-10T23:47:25.952079",
-    "video_category": "default",
+    "created_at": "2025-09-05T23:59:02.860092",
+    "updated_at": "2025-09-06T00:13:13.897474",
+    "video_category": "content_review",
     "clips": [
       {
+        "outline": "背景介绍与节日活动",
+        "content": [
+          "东京城内外欢庆清明节的场景描写及民俗活动",
+          "清明佳节上河踏春、祈福许愿的传统与热闹氛围"
+        ],
+        "start_time": "00:02:00,000",
+        "end_time": "00:04:11,860",
+        "chunk_index": 0,
         "id": "1",
-        "title": null,
-        "start_time": "00:00:00,000",
-        "end_time": "00:01:22,080",
-        "final_score": 0.9,
-        "recommend_reason": "真实创业故事引爆共鸣，情感张力强，极具感染力。",
-        "generated_title": "从辞职到创立Julius，一段关于紧张、恐惧与转化的创业真实历程",
-        "outline": "Julius的创立背景与个人经历",
-        "content": [
-          "主播辞职创业，专注开发Julius的过程",
-          "创业初期的心理状态：紧张、恐惧与积极心态的转化",
-          "Julius的产品定位：专注于智能数据分析和可视化工具"
-        ],
-        "chunk_index": 0
-      },
-      {
-        "id": "2",
-        "title": null,
-        "start_time": "00:01:22,080",
-        "end_time": "00:03:54,520",
         "final_score": 0.85,
-        "recommend_reason": "观点鲜明，精准切中AI产品发展痛点，信息价值高。",
-        "generated_title": "初创公司为何不能贪大？一文讲透专注型AI产品的真正优势",
-        "outline": "专注型AI产品的优势与市场反馈",
-        "content": [
-          "强调初创公司应聚焦特定领域而非开发通用AI工具",
-          "用户从Chat GPT转向Julius的使用体验提升",
-          "Julius在数据处理深度、图表专业性、协作功能上的优势"
-        ],
-        "chunk_index": 0
+        "recommend_reason": "清明民俗与市井烟火交织，用画面勾勒传统节日的鲜活生命力。",
+        "generated_title": "清明节东京城：市井烟火与传统民俗的鲜活画卷",
+        "title": "清明节东京城：市井烟火与传统民俗的鲜活画卷"
       },
       {
-        "id": "3",
-        "title": null,
-        "start_time": "00:03:54,520",
-        "end_time": "00:05:59,169",
-        "final_score": 0.91,
-        "recommend_reason": "干货密集，洞见深刻，值得创业者反复品读。",
-        "generated_title": "用户为什么不用你的产品？一位创业者关于高频痛点的深刻反思",
-        "outline": "创业经验与产品设计哲学",
+        "outline": "市场交易与角色互动",
         "content": [
-          "来自黑客马拉松的早期项目经验与用户留存教训",
-          "解决用户高频痛点的重要性：低频问题无法形成持续使用",
-          "初创公司 vs 大公司的创新机制差异：一个同意 vs 多个反对"
+          "张择端与赵捕的对话：食物供应、画作创作与大理寺关联",
+          "甘大官人与温月的交易纠纷：伞类买卖、欺行霸市的冲突",
+          "李老将与货郎的信息传递：关于戏班审查、商业布局的讨论"
         ],
-        "chunk_index": 0
-      },
-      {
-        "id": "4",
-        "title": null,
-        "start_time": "00:05:59,169",
-        "end_time": "00:07:50,540",
+        "start_time": "00:04:11,860",
+        "end_time": "00:11:02,049",
+        "chunk_index": 0,
+        "id": "2",
         "final_score": 0.88,
-        "recommend_reason": "职场转型+创业抉择双线叙事，代入感极强。",
-        "generated_title": "从Uber构想到离职创业，一个关于通勤出行的创新受阻故事",
-        "outline": "Uber内部创新尝试与离职决定",
-        "content": [
-          "在Uber提出的通勤出行产品构想及其受阻过程",
-          "工程负责人未批准项目，促使主播选择离职创业",
-          "快速试错理念：周末原型推动想法验证并加速决策"
-        ],
-        "chunk_index": 0
+        "recommend_reason": "权谋交易与市井百态碰撞，揭开宋代商业生态的冰山一角。",
+        "generated_title": "宋代市场权谋：交易纠纷与画作谜题的交织",
+        "title": "宋代市场权谋：交易纠纷与画作谜题的交织"
       },
       {
+        "outline": "藏尸与幕后机制",
+        "content": [
+          "张勇与温月的藏尸计划：杀人后躲避追查的策略",
+          "温月与赵大郎的密谋：藏尸位置、佯装戏票的细节",
+          "货郎的线报：干亮消失与瓦子封锁的调查线索"
+        ],
+        "start_time": "00:11:39,059",
+        "end_time": "00:16:52,049",
+        "chunk_index": 0,
+        "id": "3",
+        "final_score": 0.91,
+        "recommend_reason": "悬疑密度爆表，藏尸计谋与市井情报交织成惊心动魄的博弈场。",
+        "generated_title": "藏尸密谋与情报博弈：张勇、温月的惊险逃亡计划",
+        "title": "藏尸密谋与情报博弈：张勇、温月的惊险逃亡计划"
+      },
+      {
+        "outline": "案件调查与冲突升级",
+        "content": [
+          "康大官人与赵大郎的对峙：关于隐瞒真相与查案的分歧",
+          "干亮的密信与诱捕要犯：甘亮晋升意图与秘密行动",
+          "大哥与温月的对立：查案与私情的矛盾冲突"
+        ],
+        "start_time": "00:16:52,049",
+        "end_time": "00:23:38,394",
+        "chunk_index": 0,
+        "id": "4",
+        "final_score": 0.89,
+        "recommend_reason": "权力博弈与人性挣扎并存，揭开宋代案情的重重迷雾。",
+        "generated_title": "权力博弈与人性挣扎：康大官人、赵大郎的查案分歧",
+        "title": "权力博弈与人性挣扎：康大官人、赵大郎的查案分歧"
+      },
+      {
+        "outline": "社会现象与角色命运",
+        "content": [
+          "东京城的繁华景象与市井百态的描写",
+          "门徒资源争夺与利益分配的隐喻"
+        ],
+        "start_time": "00:23:43,109",
+        "end_time": "00:23:59,460",
+        "chunk_index": 0,
         "id": "5",
-        "title": null,
-        "start_time": "00:07:50,540",
-        "end_time": "00:09:03,020",
-        "final_score": 0.83,
-        "recommend_reason": "实战方法论清晰，适合初创团队借鉴学习。",
-        "generated_title": "产品别等完美再发布，创始人亲述‘barely可用’的早期迭代策略",
-        "outline": "快速失败与产品迭代策略",
-        "content": [
-          "对创始人过度延迟发布产品的担忧",
-          "提前发布“barely可用”的产品以获取早期反馈",
-          "NBA数据分析工具Hoops GPD的快速开发与验证过程"
-        ],
-        "chunk_index": 0
+        "final_score": 0.76,
+        "recommend_reason": "市井画卷中的权力暗流，映射古代商业社会生存法则。",
+        "generated_title": "市井暗流与权力争夺：东京城繁华下的利益博弈",
+        "title": "市井暗流与权力争夺：东京城繁华下的利益博弈"
       },
       {
+        "outline": "案件实践与解决过程",
+        "content": [
+          "货郎的线报：干绿消失与瓦子封锁的调查线索",
+          "开封府的调查部署与瓦子封锁的行动",
+          "温月与赵大郎的最终抉择：逃亡与对峙的矛盾",
+          "货郎的信息与案件走向的暗示"
+        ],
+        "start_time": "00:23:43,109",
+        "end_time": "00:24:25,599",
+        "chunk_index": 0,
         "id": "6",
-        "title": null,
-        "start_time": "00:09:03,020",
-        "end_time": "00:09:25,720",
-        "final_score": 0.87,
-        "recommend_reason": "真实增长挑战+应对策略，具备行业参考价值。",
-        "generated_title": "插件商店关闭差点让Julius停滞，他们如何靠分享功能逆转增长？",
-        "outline": "用户增长危机与应对策略",
-        "content": [
-          "Julius早期通过Chat GPT插件商店快速增长",
-          "OpenAI宣布关闭插件商店带来的用户来源断裂危机",
-          "推出分享功能促进用户自发传播与口碑增长"
-        ],
-        "chunk_index": 0
+        "final_score": 0.86,
+        "recommend_reason": "猫鼠博弈进入高潮，情报与行动的双重张力引人入胜。",
+        "generated_title": "猫鼠博弈高潮：货郎线报与开封府行动的生死对决",
+        "title": "猫鼠博弈高潮：货郎线报与开封府行动的生死对决"
       },
       {
-        "id": "7",
-        "title": null,
-        "start_time": "00:09:25,720",
-        "end_time": "00:09:40,690",
-        "final_score": 0.93,
-        "recommend_reason": "深度复盘引发思考，结尾升华，极具启发意义。",
-        "generated_title": "失败真的可怕吗？这位创始人用经历告诉你：它只是让你少走弯路",
-        "outline": "总结反思与未来设想",
+        "outline": "开场讨论与事件背景",
         "content": [
-          "回顾整个创业过程中学到的关键教训",
-          "对失败的价值认知：失败提供明确方向排除干扰",
-          "如果重新开始是否会有不同选择？答案是否定的"
+          "干亮失踪事件引发的众人关注与疑惑",
+          "赵炳庸和张择端对开封府的不满与质疑",
+          "戏班仓库机关与双头鲸的传说引入"
         ],
-        "chunk_index": 0
+        "start_time": "00:27:17,920",
+        "end_time": "00:30:58,320",
+        "chunk_index": 1,
+        "id": "7",
+        "final_score": 0.78,
+        "recommend_reason": "以悬疑事件开场，巧妙结合传说与现实矛盾，引发观众探索欲。",
+        "generated_title": "干亮失踪疑云：机关与双头鲸传说背后的真相",
+        "title": "干亮失踪疑云：机关与双头鲸传说背后的真相"
+      },
+      {
+        "outline": "双头鲸与机关谜团",
+        "content": [
+          "双头鲸身份与戏班仓库机关的关联性分析",
+          "赵炳庸与张择端的调查行动与线索发现",
+          "干亮失踪与双头鲸可能的相互关系推理"
+        ],
+        "start_time": "00:30:58,320",
+        "end_time": "00:36:00,960",
+        "chunk_index": 1,
+        "id": "8",
+        "final_score": 0.85,
+        "recommend_reason": "层层递进的谜团解析，结合推理与历史元素，极具沉浸感。",
+        "generated_title": "双头鲸谜团破解：机关与失踪案的隐秘关联",
+        "title": "双头鲸谜团破解：机关与失踪案的隐秘关联"
+      },
+      {
+        "outline": "历史经济背景分析",
+        "content": [
+          "宋朝商业贸易繁荣与商品经济的发展",
+          "造船航海技术对国际交流的影响",
+          "历史经济学家安格斯·麦迪森的GDP数据解读"
+        ],
+        "start_time": "00:36:00,960",
+        "end_time": "00:40:18,240",
+        "chunk_index": 1,
+        "id": "9",
+        "final_score": 0.82,
+        "recommend_reason": "用权威数据还原历史经济图景，展现宏大叙事与现实关联。",
+        "generated_title": "宋朝经济密码：GDP数据与造船技术的全球影响",
+        "title": "宋朝经济密码：GDP数据与造船技术的全球影响"
+      },
+      {
+        "outline": "事件后续与文化内涵",
+        "content": [
+          "对宋朝开放政策与历史发展的总结",
+          "诗句与传统文化符号的隐喻性解读",
+          "角色对事件结果的讨论与反思"
+        ],
+        "start_time": "00:40:18,240",
+        "end_time": "00:42:18,710",
+        "chunk_index": 1,
+        "id": "10",
+        "final_score": 0.8,
+        "recommend_reason": "文化隐喻与历史反思交织，赋予事件深层思想价值。",
+        "generated_title": "开放政策的文化隐喻：宋朝历史的深层反思",
+        "title": "开放政策的文化隐喻：宋朝历史的深层反思"
       }
     ],
     "collections": [
       {
         "id": "1",
-        "collection_title": "创业心路历程",
-        "collection_summary": "真实讲述创业者从想法到实践的心路历程，启发思考。",
+        "collection_title": "精选高分片段",
+        "collection_summary": "评分最高的精彩片段合集",
         "clip_ids": [
-          "7",
           "1",
-          "4"
-        ],
-        "collection_type": "ai_recommended",
-        "created_at": null
+          "2",
+          "3",
+          "4",
+          "6"
+        ]
       },
       {
         "id": "2",
-        "collection_title": "初创产品策略",
-        "collection_summary": "聚焦初创公司在产品开发中的关键决策与实战经验。",
+        "collection_title": "优质内容推荐",
+        "collection_summary": "精选优质内容片段",
         "clip_ids": [
-          "2",
           "5",
-          "3"
-        ],
-        "collection_type": "ai_recommended",
-        "created_at": null
-      },
-      {
-        "id": "3",
-        "collection_title": "增长与转型挑战",
-        "collection_summary": "解析初创企业在增长瓶颈与业务转型中的应对之道。",
-        "clip_ids": [
-          "6",
-          "2"
-        ],
-        "collection_type": "ai_recommended",
-        "created_at": null
+          "7"
+        ]
       }
     ],
     "current_step": null,

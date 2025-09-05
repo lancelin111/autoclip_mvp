@@ -21,6 +21,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
     video?: File
     srt?: File
   }>({})
+  const [autoGenerateSrt, setAutoGenerateSrt] = useState(true)
   
   const { addProject } = useProjectStore()
 
@@ -80,10 +81,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
       return
     }
 
-    if (!files.srt) {
-      message.error('请同时导入字幕文件(.srt)')
-      return
-    }
+    // 字幕文件现在是可选的
 
     if (!projectName.trim()) {
       message.error('请输入项目名称')
@@ -109,7 +107,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
         video_file: files.video,
         srt_file: files.srt,
         project_name: projectName.trim(),
-        video_category: selectedCategory
+        video_category: selectedCategory,
+        auto_generate_srt: autoGenerateSrt && !files.srt
       })
       
       clearInterval(progressInterval)
@@ -215,7 +214,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
             {isDragActive ? '松开鼠标导入文件' : '点击或拖拽文件到此区域'}
           </Text>
           <Text style={{ color: '#cccccc', fontSize: '14px', lineHeight: '1.5' }}>
-            支持 MP4、AVI、MOV、MKV、WebM 格式，<Text style={{ color: '#ff9500', fontWeight: 600 }}>必须同时导入字幕文件(.srt)</Text>
+            支持 MP4、AVI、MOV、MKV、WebM 格式，<Text style={{ color: '#52c41a', fontWeight: 600 }}>可选择上传字幕文件(.srt)</Text>
           </Text>
         </div>
       </div>
@@ -413,16 +412,16 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
             <div style={{
               marginTop: '12px',
               padding: '12px 16px',
-              background: 'rgba(255, 149, 0, 0.1)',
-              border: '1px solid rgba(255, 149, 0, 0.3)',
+              background: 'rgba(82, 196, 26, 0.1)',
+              border: '1px solid rgba(82, 196, 26, 0.3)',
               borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               gap: '8px'
             }}>
-              <SubnodeOutlined style={{ color: '#ff9500', fontSize: '16px' }} />
-              <Text style={{ color: '#ff9500', fontSize: '14px', fontWeight: 500 }}>
-                请添加字幕文件(.srt)以完成导入
+              <SubnodeOutlined style={{ color: '#52c41a', fontSize: '16px' }} />
+              <Text style={{ color: '#52c41a', fontSize: '14px', fontWeight: 500 }}>
+                未上传字幕文件，系统将自动生成字幕（需要额外处理时间）
               </Text>
             </div>
           )}
@@ -470,7 +469,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
             type="primary" 
             size="large"
             loading={uploading}
-            disabled={!files.video || !files.srt || !projectName.trim()}
+            disabled={!files.video || !projectName.trim()}
             onClick={handleUpload}
             style={{
               height: '48px',

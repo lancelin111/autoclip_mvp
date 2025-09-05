@@ -1,0 +1,27 @@
+# Core Dependencies
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+python-multipart==0.0.6
+
+# LLM and AI
+dashscope==1.17.0
+openai==1.6.1
+
+# Text and Subtitle Processing
+pysrt==1.1.2
+
+# Video Processing
+yt-dlp==2024.1.14
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.2
+
+# Utils
+requests==2.31.0
+aiofiles==23.2.1
+python-dotenv==1.0.0
+
+# Logging
+loguru==0.7.2

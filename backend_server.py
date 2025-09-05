@@ -10,6 +10,7 @@ import uuid
 import shutil
 import asyncio
 import logging
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Union
@@ -600,13 +601,82 @@ async def update_project_category(project_id: str, video_category: str = Form(..
         logger.error(f"update_project_category failed for {project_id}: {e}")
         raise HTTPException(status_code=500, detail="服务器内部错误")
 
+async def detect_and_trim_intro(video_path: Path, srt_path: Path, logger) -> None:
+    """检测并裁剪视频片头"""
+    try:
+        from src.utils.smart_intro_detector import SmartIntroDetector
+        
+        # 首先检查settings中是否有手动设置的片头时长
+        settings_file = Path("./data/settings.json")
+        if settings_file.exists():
+            with open(settings_file, 'r', encoding='utf-8') as f:
+                settings = json.load(f)
+        else:
+            settings = {}
+        
+        # 如果settings中有manual_intro_duration，优先使用
+        manual_intro = settings.get('manual_intro_duration')
+        if manual_intro and manual_intro > 0:
+            intro_end_seconds = manual_intro
+            logger.info(f"使用手动设置的片头时长: {intro_end_seconds}秒")
+        else:
+            # 使用智能检测器
+            detector = SmartIntroDetector()
+            detection_result = detector.detect(video_path)
+            intro_end_seconds = detection_result.intro_end_seconds
+            logger.info(f"智能片头检测结果: {intro_end_seconds}秒, "
+                       f"置信度: {detection_result.confidence:.2f}, "
+                       f"检测方法: {detection_result.method}")
+        
+        # 如果检测到片头，裁剪视频和调整字幕
+        if intro_end_seconds > 0:
+            # 获取视频扩展名
+            video_extension = video_path.suffix[1:]  # 去掉点号
+            
+            # 创建裁剪后的视频文件名
+            trimmed_video_path = video_path.parent / f"input_trimmed.{video_extension}"
+            
+            # 使用ffmpeg裁剪视频
+            trim_cmd = [
+                "ffmpeg",
+                "-i", str(video_path),
+                "-ss", str(intro_end_seconds),  # 从这个时间开始
+                "-c", "copy",  # 使用流复制，速度快
+                "-y",  # 覆盖输出文件
+                str(trimmed_video_path)
+            ]
+            
+            logger.info(f"正在裁剪视频，去除前{intro_end_seconds}秒...")
+            result = subprocess.run(trim_cmd, capture_output=True, text=True)
+            
+            if result.returncode == 0:
+                # 裁剪成功，替换原视频
+                video_path.unlink()  # 删除原视频
+                trimmed_video_path.rename(video_path)  # 重命名裁剪后的视频
+                logger.info(f"视频裁剪成功，已去除{intro_end_seconds}秒片头")
+                
+                # 调整字幕时间轴
+                from src.utils.intro_detector import IntroDetector
+                # 使用原来的字幕调整功能
+                subtitle_adjuster = IntroDetector()
+                subtitle_adjuster.adjust_srt_timeline(srt_path, intro_end_seconds)
+                logger.info(f"字幕时间轴已调整")
+            else:
+                logger.error(f"视频裁剪失败: {result.stderr}")
+                # 不中断流程，继续使用原视频
+                
+    except Exception as e:
+        logger.error(f"片头检测/裁剪过程出错: {e}")
+        # 不中断流程，继续处理
+
 @app.post("/api/upload")
 async def upload_files(
     background_tasks: BackgroundTasks,
     video_file: UploadFile = File(...),
     srt_file: Optional[UploadFile] = File(None),
     project_name: str = Form(...),
-    video_category: str = Form("default")
+    video_category: str = Form("default"),
+    auto_generate_srt: bool = Form(False)
 ):
     """上传文件并创建项目"""
     # 验证文件类型
@@ -632,10 +702,89 @@ async def upload_files(
         with open(srt_path, "wb") as f:
             content = await srt_file.read()
             f.write(content)
+        
+        # 对手动上传的字幕也进行片头检测
+        await detect_and_trim_intro(video_path, srt_path, logger)
+    elif auto_generate_srt:
+        # 使用VideoCaptioner自动生成字幕
+        logger.info(f"Auto-generating SRT for project {project_id}")
+        srt_path = input_dir / "input.srt"
+        
+        # 调用VideoCaptioner的video_to_srt.py脚本
+        try:
+            # 获取VideoCaptioner路径
+            video_captioner_path = Path("/Users/lancelin/project/VideoCaptioner")
+            if not video_captioner_path.exists():
+                raise HTTPException(status_code=500, detail="VideoCaptioner项目不存在")
+            
+            # 构建命令 - 在VideoCaptioner目录中执行
+            # 使用默认的bijian模型，不需要下载
+            # 确保使用绝对路径
+            abs_video_path = video_path.absolute()
+            abs_srt_path = srt_path.absolute()
+            
+            cmd = [
+                sys.executable,
+                "video_to_srt.py",
+                str(abs_video_path),
+                "--model", "bijian",
+                "--output", str(abs_srt_path)
+            ]
+            
+            # 执行命令
+            result = subprocess.run(
+                cmd, 
+                capture_output=True, 
+                text=True,
+                cwd=str(video_captioner_path)  # 在VideoCaptioner目录中执行
+            )
+            
+            if result.returncode != 0:
+                logger.error(f"Failed to generate SRT: stdout={result.stdout}, stderr={result.stderr}, return_code={result.returncode}")
+                error_msg = result.stderr if result.stderr else result.stdout
+                raise HTTPException(status_code=500, detail=f"字幕生成失败: {error_msg}")
+            
+            # 检查生成的字幕文件是否存在
+            if not srt_path.exists():
+                logger.error(f"SRT file not generated at: {srt_path}")
+                raise HTTPException(status_code=500, detail=f"字幕文件生成失败，文件不存在: {srt_path}")
+                
+            logger.info(f"Successfully generated SRT for project {project_id}")
+            
+            # 片头检测和裁剪
+            await detect_and_trim_intro(video_path, srt_path, logger)
+            
+            # 字幕生成成功后，自动开始处理项目
+            project_manager.update_project(project_id, status="processing")
+            # 启动后台处理任务
+            background_tasks.add_task(process_project_background, project_id, 1)
+        except HTTPException:
+            raise
+        except Exception as e:
+            logger.error(f"Error generating SRT: {str(e)}, type: {type(e)}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            raise HTTPException(status_code=500, detail=f"字幕生成过程出错: {str(e)}")
+    else:
+        # 如果没有字幕文件也没有选择自动生成，返回错误
+        raise HTTPException(status_code=400, detail="请上传字幕文件或选择自动生成字幕")
     
     # 创建项目记录（video_path相对于项目根目录）
     relative_video_path = f"uploads/{project_id}/input/input.{video_extension}"
     project = project_manager.create_project(project_name, relative_video_path, project_id, video_category)
+    
+    # 如果选择了自动生成字幕，则在后台启动处理
+    if auto_generate_srt and not srt_file:
+        # 更新状态为"生成字幕中"
+        project_manager.update_project(project_id, status="generating_subtitles")
+        processing_status[project_id] = {
+            "status": "generating_subtitles",
+            "current_step": 0,
+            "total_steps": 7,  # 增加一个字幕生成步骤
+            "step_name": "生成字幕中",
+            "progress": 0
+        }
+        # 生成完成后会自动开始处理，不需要额外调度
     
     return project
 
@@ -690,8 +839,11 @@ async def process_project_background(project_id: str, start_step: int = 1):
                     with open(final_results_path, 'r', encoding='utf-8') as f:
                         final_results = json.load(f)
                     
-                    # 提取clips数据
-                    clips = final_results.get('step3_scoring', [])
+                    # 提取clips数据 - 应该从step4_titles获取，因为它包含了生成的标题
+                    clips = final_results.get('step4_titles', [])
+                    if not clips:
+                        # 如果step4_titles不存在，尝试从step3_scoring获取
+                        clips = final_results.get('step3_scoring', [])
                     collections = final_results.get('step5_collections', [])
                     
                     # 修复clips数据：将generated_title映射为title字段
