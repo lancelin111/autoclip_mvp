@@ -1,6 +1,6 @@
 # AutoClip - AI-Powered Video Clipping Tool
 
-🎬 An intelligent video clipping and collection recommendation system based on AI, supporting automatic Bilibili video download, subtitle extraction, intelligent slicing, and collection generation.
+🎬 An intelligent video clipping and collection recommendation system based on AI, supporting video upload, automatic subtitle generation, intelligent slicing, and collection generation.
 
 ## 📋 Table of Contents
 
@@ -19,7 +19,7 @@
 ## ✨ Features
 
 - 🔥 **Intelligent Video Clipping**: AI-powered video content analysis for high-quality automatic clipping
-- 📺 **Bilibili Video Download**: Support for automatic Bilibili video download and subtitle extraction
+- 🗣️ **Speech Recognition**: Automatic subtitle generation from video audio using AI
 - 🎯 **Smart Collection Recommendations**: AI automatically analyzes slice content and recommends related collections
 - 🎨 **Manual Collection Editing**: Support drag-and-drop sorting, adding/removing slices
 - 📦 **One-Click Package Download**: Support one-click package download for all slices and collections
@@ -211,7 +211,7 @@ autoclip_mvp/
 │   │   ├── text_processor.py  # Text processing
 │   │   ├── project_manager.py # Project management
 │   │   ├── error_handler.py   # Error handling
-│   │   └── bilibili_downloader.py # Bilibili downloader
+│   │   └── intro_detector.py       # Intro detection
 │   └── upload/            # File upload
 │       └── upload_manager.py
 │
@@ -274,7 +274,7 @@ Configure your API keys in `data/settings.json`. You can choose between DashScop
 - **SiliconFlow**: Visit [SiliconCloud](https://siliconflow.cn) → Login → API Keys → Create New API Key
 
 ### Browser Configuration
-Support for Chrome, Firefox, Safari and other browsers for Bilibili video download:
+Support for multiple video formats and processing options:
 ```json
 {
   "default_browser": "chrome"
@@ -290,11 +290,11 @@ Support for Chrome, Firefox, Safari and other browsers for Bilibili video downlo
 4. Fill in project name and category
 5. Click "Start Processing"
 
-### 2. Download Bilibili Video
-1. Click "Bilibili Video Download" on homepage
-2. Enter Bilibili video link (must be a video with subtitles)
-3. Select browser (for login status)
-4. Click "Start Download"
+### 2. Processing Options
+1. Choose whether to auto-generate subtitles if not provided
+2. Set intro duration for automatic removal (optional)
+3. Select video category for optimized AI processing
+4. Click "Start Processing" to begin
 
 ### 3. Edit Collections
 1. Enter project detail page
@@ -449,12 +449,13 @@ npm run lint   # Code linting
 
 #### ✨ Initial Release
 - **🎬 AI-Powered Video Clipping**: Intelligent video content analysis and automatic clipping
-- **📺 Bilibili Video Download**: Support for automatic Bilibili video download and subtitle extraction
+- **🗣️ Speech Recognition**: Automatic subtitle generation from video audio  
 - **🎯 Smart Collection Recommendations**: AI automatically analyzes slice content and recommends related collections
 - **🎨 Manual Collection Editing**: Support drag-and-drop sorting, adding/removing slices
 - **📦 One-Click Package Download**: Support one-click package download for all slices and collections
 - **🌐 Modern Web Interface**: React + TypeScript + Ant Design
 - **⚡ Real-time Processing Status**: Real-time display of processing progress and logs
+- **🎬 Intro Detection**: Automatic detection and removal of video intros
 
 ---
 
@@ -463,8 +464,8 @@ npm run lint   # Code linting
 ### Q: How do I choose between DashScope and SiliconFlow APIs?
 A: Both APIs provide similar AI capabilities. DashScope is from Alibaba Cloud, while SiliconFlow offers access to multiple AI models. Choose based on your needs and API availability.
 
-### Q: Bilibili video download failed?
-A: Make sure you're logged into your Bilibili account and select the correct browser. Chrome browser is recommended.
+### Q: How to generate subtitles for videos without subtitles?
+A: Enable the "Auto-generate subtitles" option when uploading. The system will use VideoCaptioner for speech recognition.
 
 ### Q: AI analysis is slow?
 A: You can adjust the `chunk_size` parameter. Smaller values will improve speed but may affect quality.
