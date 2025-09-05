@@ -30,8 +30,6 @@ sys.path.append(str(Path(__file__).parent))
 
 from src.main import AutoClipsProcessor
 from src.config import OUTPUT_DIR, CLIPS_DIR, COLLECTIONS_DIR, METADATA_DIR, DASHSCOPE_API_KEY, VideoCategory, VIDEO_CATEGORIES_CONFIG
-# from src.upload.upload_manager import UploadManager, Platform, UploadStatus  # 已移除bilitool相关功能
-# B站功能已移除
 
 # 配置日志
 logger = logging.getLogger(__name__)
@@ -105,7 +103,6 @@ class ApiSettings(BaseModel):
 # class BilibiliCredential(BaseModel):
 # class UploadTaskResponse(BaseModel):
 
-# B站相关数据模型已移除
 
 # 全局状态管理
 class ProjectManager:
@@ -310,107 +307,7 @@ async def get_video_categories():
         "default_category": VideoCategory.DEFAULT
     }
 
-@app.get("/api/browsers/detect")
-async def detect_available_browsers():
-    """检测系统中可用的浏览器"""
-    import subprocess
-    import platform
-    
-    browsers = []
-    
-    # 检测Chrome
-    try:
-        if platform.system() == "Darwin":  # macOS
-            # macOS上Chrome通常在Applications目录
-            chrome_paths = [
-                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-                "/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary"
-            ]
-            available = any(Path(path).exists() for path in chrome_paths)
-            browsers.append({"name": "Chrome", "value": "chrome", "available": available, "priority": 1})
-        elif platform.system() == "Windows":
-            # Windows Chrome 通常在固定位置
-            chrome_paths = [
-                r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-                r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
-            ]
-            available = any(Path(path).exists() for path in chrome_paths)
-            browsers.append({"name": "Chrome", "value": "chrome", "available": available, "priority": 1})
-        else:  # Linux
-            result = subprocess.run(["which", "google-chrome"], capture_output=True, text=True)
-            if result.returncode == 0:
-                browsers.append({"name": "Chrome", "value": "chrome", "available": True, "priority": 1})
-            else:
-                browsers.append({"name": "Chrome", "value": "chrome", "available": False, "priority": 1})
-    except Exception:
-        browsers.append({"name": "Chrome", "value": "chrome", "available": False, "priority": 1})
-    
-    # 检测Edge
-    try:
-        if platform.system() == "Darwin":  # macOS
-            result = subprocess.run(["which", "microsoft-edge"], capture_output=True, text=True)
-            if result.returncode == 0:
-                browsers.append({"name": "Edge", "value": "edge", "available": True, "priority": 2})
-            else:
-                browsers.append({"name": "Edge", "value": "edge", "available": False, "priority": 2})
-        elif platform.system() == "Windows":
-            edge_paths = [
-                r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
-                r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"
-            ]
-            available = any(Path(path).exists() for path in edge_paths)
-            browsers.append({"name": "Edge", "value": "edge", "available": available, "priority": 2})
-        else:  # Linux
-            result = subprocess.run(["which", "microsoft-edge"], capture_output=True, text=True)
-            if result.returncode == 0:
-                browsers.append({"name": "Edge", "value": "edge", "available": True, "priority": 2})
-            else:
-                browsers.append({"name": "Edge", "value": "edge", "available": False, "priority": 2})
-    except Exception:
-        browsers.append({"name": "Edge", "value": "edge", "available": False, "priority": 2})
-    
-    # 检测Firefox
-    try:
-        if platform.system() == "Darwin":  # macOS
-            result = subprocess.run(["which", "firefox"], capture_output=True, text=True)
-            if result.returncode == 0:
-                browsers.append({"name": "Firefox", "value": "firefox", "available": True, "priority": 3})
-            else:
-                browsers.append({"name": "Firefox", "value": "firefox", "available": False, "priority": 3})
-        elif platform.system() == "Windows":
-            firefox_paths = [
-                r"C:\Program Files\Mozilla Firefox\firefox.exe",
-                r"C:\Program Files (x86)\Mozilla Firefox\firefox.exe"
-            ]
-            available = any(Path(path).exists() for path in firefox_paths)
-            browsers.append({"name": "Firefox", "value": "firefox", "available": available, "priority": 3})
-        else:  # Linux
-            result = subprocess.run(["which", "firefox"], capture_output=True, text=True)
-            if result.returncode == 0:
-                browsers.append({"name": "Firefox", "value": "firefox", "available": True, "priority": 3})
-            else:
-                browsers.append({"name": "Firefox", "value": "firefox", "available": False, "priority": 3})
-    except Exception:
-        browsers.append({"name": "Firefox", "value": "firefox", "available": False, "priority": 3})
-    
-    # Safari (仅macOS)
-    if platform.system() == "Darwin":
-        browsers.append({"name": "Safari", "value": "safari", "available": True, "priority": 4})
-    else:
-        browsers.append({"name": "Safari", "value": "safari", "available": False, "priority": 4})
-    
-    # 按优先级排序
-    browsers.sort(key=lambda x: x["priority"])
-    
-    return {"browsers": browsers}
 
-# B站解析API已移除
-
-# B站下载API已移除
-
-# B站任务状态API已移除
-
-# B站任务列表API已移除
 
 @app.get("/api/projects", response_model=List[Project])
 async def get_projects():
@@ -576,10 +473,18 @@ async def upload_files(
         
         # 调用VideoCaptioner的video_to_srt.py脚本
         try:
-            # 获取VideoCaptioner路径
-            video_captioner_path = Path("/Users/lancelin/project/VideoCaptioner")
+            # 获取VideoCaptioner路径，优先使用环境变量，否则使用默认路径
+            import os
+            video_captioner_path = Path(os.environ.get('VIDEOCAPTIONER_PATH', '/Users/lancelin/project/VideoCaptioner'))
             if not video_captioner_path.exists():
-                raise HTTPException(status_code=500, detail="VideoCaptioner项目不存在")
+                # 尝试在当前项目的同级目录查找
+                alternative_path = Path(__file__).parent.parent / 'VideoCaptioner'
+                if alternative_path.exists():
+                    video_captioner_path = alternative_path
+                else:
+                    logger.error(f"VideoCaptioner not found at {video_captioner_path} or {alternative_path}")
+                    logger.info("Please set VIDEOCAPTIONER_PATH environment variable or place VideoCaptioner in the same parent directory")
+                    raise HTTPException(status_code=500, detail="VideoCaptioner项目不存在，请设置VIDEOCAPTIONER_PATH环境变量")
             
             # 构建命令 - 在VideoCaptioner目录中执行
             # 使用默认的bijian模型，不需要下载
@@ -777,7 +682,6 @@ async def process_project_background_with_lock(project_id: str, start_step: int 
                 project_manager.current_processing_count -= 1
         logger.info(f"项目 {project_id} 处理完成，当前并发处理数: {project_manager.current_processing_count}")
 
-# B站下载任务处理函数已移除
 
 @app.post("/api/projects/{project_id}/process")
 async def start_processing(project_id: str, background_tasks: BackgroundTasks):

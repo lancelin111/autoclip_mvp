@@ -21,7 +21,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
     video?: File
     srt?: File
   }>({})
-  const [autoGenerateSrt, setAutoGenerateSrt] = useState(true)
+  const [autoGenerateSrt] = useState(true)
   
   const { addProject } = useProjectStore()
 
